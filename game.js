@@ -37,14 +37,19 @@ const gameController = (() => {
                     grid.textContent = playerOne.sign;
                     playerTurn++;
                     gameHistory[nGrid] = playerOne.sign;
+                    if(checkWinner() == true){
+                        console.log("X has won")
+                    }
 
                 } else if (playerTurn % 2 != 0) {
                     grid.textContent = playerTwo.sign;
                     playerTurn++;
                     gameHistory[nGrid] = playerTwo.sign;
+                    if(checkWinner() == true){
+                        console.log("O has won")
+                    }
 
                 }
-                checkWinner();  
                 if (playerTurn == 9) {
                     console.log("tie")
                 }
