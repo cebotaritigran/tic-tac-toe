@@ -4,6 +4,7 @@ const gameBoard = (() => {
     return { board }
 })();
 
+
 // player factorial function
 const Players = (player, sign) => {
     const getName = () => player;
@@ -12,10 +13,10 @@ const Players = (player, sign) => {
 }
 
 const gameController = (() => {
+    const gridBox = document.querySelectorAll('.grid-box');
     const playerfirst = Players('hehe', "x");
     const playersecond = Players('hehe', "o");
     let playerTurn = 0;
-    let gameHistory = ["", "", "", "", "", "", "", "", ""];
     const combos = [
         [0, 1, 2],
         [3, 4, 5],
@@ -26,29 +27,28 @@ const gameController = (() => {
         [0, 4, 8],
         [2, 4, 6],
     ];
+
+    
     // game factory function 
     const Game = (grid, playerOne, playerTwo) => {
         // put x or o on display
         const turn = () => {
-
-            let nGrid = grid.getAttribute('value')
             if (grid.textContent === "") {
                 if (playerTurn % 2 == 0) {
                     grid.textContent = playerOne.sign;
                     playerTurn++;
-                    gameHistory[nGrid] = playerOne.sign;
-                    if(checkWinner() == true){
+
+                    if (checkWinner() == true) {
                         console.log("X has won")
                     }
 
                 } else if (playerTurn % 2 != 0) {
                     grid.textContent = playerTwo.sign;
                     playerTurn++;
-                    gameHistory[nGrid] = playerTwo.sign;
-                    if(checkWinner() == true){
+
+                    if (checkWinner() == true) {
                         console.log("O has won")
                     }
-
                 }
                 if (playerTurn == 9) {
                     console.log("tie")
@@ -58,7 +58,6 @@ const gameController = (() => {
         return { turn }
     }
     // game board display
-    const gridBox = document.querySelectorAll('.grid-box');
     for (let i = 0; i < gridBox.length; i++) {
         gridBox[i].textContent = gameBoard.board[i];
         gridBox[i].setAttribute('value', i)
@@ -81,4 +80,5 @@ const gameController = (() => {
             }
         }
     }
+    return {Game};
 })()
