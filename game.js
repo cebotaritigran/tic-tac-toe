@@ -4,7 +4,6 @@ const gameBoard = (() => {
     return { board }
 })();
 
-
 // player factorial function
 const Players = (player, sign) => {
     const getName = () => player;
@@ -17,6 +16,7 @@ const gameController = (() => {
     const playerfirst = Players('hehe', "x");
     const playersecond = Players('hehe', "o");
     let playerTurn = 0;
+    let gameEnded = false;
     const combos = [
         [0, 1, 2],
         [3, 4, 5],
@@ -28,17 +28,17 @@ const gameController = (() => {
         [2, 4, 6],
     ];
 
-    
+
     // game factory function 
     const Game = (grid, playerOne, playerTwo) => {
         // put x or o on display
         const turn = () => {
-            if (grid.textContent === "") {
+            if (grid.textContent === "" && gameEnded == false) {
                 if (playerTurn % 2 == 0) {
                     grid.textContent = playerOne.sign;
                     playerTurn++;
-
                     if (checkWinner() == true) {
+                        gameEnded = checkWinner();
                         console.log("X has won")
                     }
 
@@ -47,6 +47,7 @@ const gameController = (() => {
                     playerTurn++;
 
                     if (checkWinner() == true) {
+                        gameEnded = checkWinner();
                         console.log("O has won")
                     }
                 }
@@ -58,16 +59,17 @@ const gameController = (() => {
         return { turn }
     }
     // game board display
-    for (let i = 0; i < gridBox.length; i++) {
-        gridBox[i].textContent = gameBoard.board[i];
-        gridBox[i].setAttribute('value', i)
-        game = Game(gridBox[i], playerfirst, playersecond)
-        gridBox[i].addEventListener('click', game.turn)
+    const displayController = () => {
+        for (let i = 0; i < gridBox.length; i++) {
+            gridBox[i].textContent = gameBoard.board[i];
+            gridBox[i].setAttribute('value', i)
+            game = Game(gridBox[i], playerfirst, playersecond)
+            gridBox[i].addEventListener('click', game.turn)
+            console.log(1)
+        }
     }
-    // 
     const checkWinner = () => {
         for (let x = 0; x < gameBoard.board.length; x++) {
-
             if (
                 gridBox[combos[x][0]].textContent == gridBox[combos[x][1]].textContent &&
                 gridBox[combos[x][1]].textContent == gridBox[combos[x][2]].textContent &&
@@ -80,5 +82,7 @@ const gameController = (() => {
             }
         }
     }
-    return {Game};
+    return { Game, displayController };
 })()
+
+gameController.displayController();
