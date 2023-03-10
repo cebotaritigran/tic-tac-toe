@@ -4,17 +4,18 @@ const gameBoard = (() => {
     return { board }
 })();
 
-
+// players factory function to create players
 const Players = (player, sign) => {
     const getName = () => player;
     const getSign = () => sign;
     return { player, sign, getName, getSign }
 }
 
+// gameController is a module that plays the game on opening of the page
 const gameController = (() => {
     const gridBox = document.querySelectorAll('.grid-box');
-    const playerfirst = Players('hehe', "x");
-    const playersecond = Players('hehe', "o");
+    const playerfirst = Players('hehe', "X");
+    const playersecond = Players('hehe', "O");
 
     // player turn variable to track if its x's or o's turn
     let playerTurn = 0;
@@ -33,6 +34,7 @@ const gameController = (() => {
         [2, 4, 6],
     ];
 
+    // game function that returns turn function to play the game
     const Game = (grid, playerOne, playerTwo) => {
         // main function where game is played
         // will check if grid is empty and if someone has won
@@ -42,28 +44,37 @@ const gameController = (() => {
                 if (playerTurn % 2 == 0) {
                     grid.textContent = playerOne.sign;
                     playerTurn++;
+                    console.log(playerTurn)
+                    checkTie()
                     if (checkWinner() == true) {
                         gameEnded = checkWinner();
                         console.log("X has won")
                     }
-
                 } else if (playerTurn % 2 != 0) {
                     grid.textContent = playerTwo.sign;
                     playerTurn++;
-
+                    console.log(playerTurn)
+                    checkTie()
                     if (checkWinner() == true) {
                         gameEnded = checkWinner();
                         console.log("O has won")
                     }
-                }
-                if (playerTurn == 9) {
-                    console.log("tie")
                 }
             }
         }
         return { turn }
     }
 
+    const checkTie = () => {
+        if (gameEnded == false && playerTurn == 9) {
+            playerTurn = 0;
+            gameEnded = true;
+            console.log("tie")
+        }
+    }
+
+
+    // display function that displays new board and adds event listeners to each grid
     const displayController = () => {
         for (let i = 0; i < gridBox.length; i++) {
             gridBox[i].textContent = gameBoard.board[i];
@@ -81,7 +92,7 @@ const gameController = (() => {
                 gridBox[combos[x][1]].textContent == gridBox[combos[x][2]].textContent &&
                 gridBox[combos[x][0]].textContent != ""
             ) {
-                console.log(":)")
+                playerTurn = 0;
                 return true
             } else {
                 false
@@ -95,6 +106,7 @@ const gameController = (() => {
         const resetButton = document.querySelector('.reset-button')
         resetButton.addEventListener('click', () => {
             gameEnded = false;
+            playerTurn = 0;
             displayController();
         })
     }
@@ -102,4 +114,5 @@ const gameController = (() => {
 })()
 
 gameController.displayController();
+// to create event lsitener on reset button on the run 
 gameController.resetGame();

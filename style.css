@@ -4,14 +4,23 @@ body{
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    width: 100vw;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
     background-color: rgb(39, 44, 50);
+}
+
+.winner-display{
+    font-size: 54px;
+    color: white;
 }
 
 .container{
     display: grid;
-    grid-template-columns: repeat(3,100px);
-    grid-template-rows: repeat(3,100px);
-    gap: 1px;
+    grid-template-columns: repeat(3,180px);
+    grid-template-rows: repeat(3,180px);
+    gap: 10px;
 }
 
 .grid-box{
@@ -20,5 +29,9 @@ body{
     align-items: center;
     background-color: tomato;
     color: white;
-    font-size: 32px;
+    font-size: 72px;
+}
+
+.grid-box:hover{
+    background-color: rgb(255, 151, 133);
 }
