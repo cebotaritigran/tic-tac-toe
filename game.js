@@ -14,8 +14,9 @@ const Players = (player, sign) => {
 // gameController is a module that plays the game on opening of the page
 const gameController = (() => {
     const gridBox = document.querySelectorAll('.grid-box');
-    const playerfirst = Players('hehe', "X");
-    const playersecond = Players('hehe', "O");
+    const winnerDisplay = document.querySelector('.winner-display')
+    const playerfirst = Players('playerOne', "X");
+    const playersecond = Players('playerTwo', "O");
 
     // player turn variable to track if its x's or o's turn
     let playerTurn = 0;
@@ -48,6 +49,7 @@ const gameController = (() => {
                     checkTie()
                     if (checkWinner() == true) {
                         gameEnded = checkWinner();
+                        winnerDisplay.textContent = 'X HAS WON'
                         console.log("X has won")
                     }
                 } else if (playerTurn % 2 != 0) {
@@ -57,6 +59,7 @@ const gameController = (() => {
                     checkTie()
                     if (checkWinner() == true) {
                         gameEnded = checkWinner();
+                        winnerDisplay.textContent = 'O HAS WON'
                         console.log("O has won")
                     }
                 }
@@ -65,14 +68,15 @@ const gameController = (() => {
         return { turn }
     }
 
+    // check for ties
     const checkTie = () => {
         if (gameEnded == false && playerTurn == 9) {
             playerTurn = 0;
             gameEnded = true;
+            winnerDisplay.textContent = 'TIE'
             console.log("tie")
         }
     }
-
 
     // display function that displays new board and adds event listeners to each grid
     const displayController = () => {
@@ -107,6 +111,7 @@ const gameController = (() => {
         resetButton.addEventListener('click', () => {
             gameEnded = false;
             playerTurn = 0;
+            winnerDisplay.textContent = ''
             displayController();
         })
     }

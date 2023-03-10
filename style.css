@@ -1,3 +1,7 @@
+:root{
+    font-family: 'Roboto', sans-serif;
+}
+
 body{
     display: flex;
     justify-content: center;
@@ -12,6 +16,7 @@ body{
 }
 
 .winner-display{
+    height: 54px;
     font-size: 54px;
     color: white;
 }
@@ -20,18 +25,39 @@ body{
     display: grid;
     grid-template-columns: repeat(3,180px);
     grid-template-rows: repeat(3,180px);
-    gap: 10px;
+    gap: 20px;
 }
 
 .grid-box{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: tomato;
+    background-color: rgb(67, 128, 209);
     color: white;
     font-size: 72px;
 }
 
 .grid-box:hover{
-    background-color: rgb(255, 151, 133);
+    background-color: rgb(82, 144, 236);
+    cursor: pointer;
+}
+
+.reset-button{
+    height: 40px;
+    width: 180px;
+    font-size: 32px;
+    border: none;
+    outline: none;
+    background-color: rgb(255, 79, 79);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.reset-button:hover{
+    background-color: rgb(255, 50, 50);
+    color: rgb(255, 255, 255);
+}
+
+.reset-button:active{
+    background-color: rgb(224, 15, 15);
 }
