@@ -4,7 +4,7 @@ const gameBoard = (() => {
     return { board }
 })();
 
-// player factorial function
+
 const Players = (player, sign) => {
     const getName = () => player;
     const getSign = () => sign;
@@ -15,8 +15,13 @@ const gameController = (() => {
     const gridBox = document.querySelectorAll('.grid-box');
     const playerfirst = Players('hehe', "x");
     const playersecond = Players('hehe', "o");
+
+    // player turn variable to track if its x's or o's turn
     let playerTurn = 0;
+    // gameEneded variable when true can't input anything on grid
     let gameEnded = false;
+
+    // wining combos that check grids
     const combos = [
         [0, 1, 2],
         [3, 4, 5],
@@ -28,10 +33,10 @@ const gameController = (() => {
         [2, 4, 6],
     ];
 
-
-    // game factory function 
     const Game = (grid, playerOne, playerTwo) => {
-        // put x or o on display
+        // main function where game is played
+        // will check if grid is empty and if someone has won
+        // if not the players take turns to play via a variable which checks if the turn number is even or odd
         const turn = () => {
             if (grid.textContent === "" && gameEnded == false) {
                 if (playerTurn % 2 == 0) {
@@ -58,16 +63,17 @@ const gameController = (() => {
         }
         return { turn }
     }
-    // game board display
+
     const displayController = () => {
         for (let i = 0; i < gridBox.length; i++) {
             gridBox[i].textContent = gameBoard.board[i];
             gridBox[i].setAttribute('value', i)
             game = Game(gridBox[i], playerfirst, playersecond)
             gridBox[i].addEventListener('click', game.turn)
-            console.log(1)
         }
     }
+
+    // checking combinations via checking if all the combinations have same sign and if its same return true
     const checkWinner = () => {
         for (let x = 0; x < gameBoard.board.length; x++) {
             if (
@@ -82,7 +88,18 @@ const gameController = (() => {
             }
         }
     }
-    return { Game, displayController };
+
+    // resets the display controller and gameEnded variable
+    // in order to play the game again
+    const resetGame = () => {
+        const resetButton = document.querySelector('.reset-button')
+        resetButton.addEventListener('click', () => {
+            gameEnded = false;
+            displayController();
+        })
+    }
+    return { Game, displayController, resetGame };
 })()
 
 gameController.displayController();
+gameController.resetGame();
